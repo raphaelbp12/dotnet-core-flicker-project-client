@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { FeedAPI } from "./services/FeedService";
+import FeedItem from "./types/FeedItem";
+import FeedResult from "./types/FeedResult";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [query, setQuery] = useState<string>("f1,nature");
+    const [items, setItems] = useState<FeedItem[]>([]);
+
+    useEffect(() => {
+
+        FeedAPI.search(query).then((result: FeedResult) => {
+            console.log('result', result);
+            if (result && result.items) {
+                setItems(result.items);
+            }
+        });
+    }, [query]);
+
+    return <div className="App">{ items.map((item: FeedItem) => {
+        return <img key={ item.link } src={ item.media.m } alt={ item.title } />
+    })}</div>;
 }
 
 export default App;
