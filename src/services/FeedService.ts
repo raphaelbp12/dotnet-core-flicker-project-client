@@ -1,6 +1,6 @@
 import FeedResult from "../types/FeedResult";
 
-const BASE = "//localhost:4040/api";
+const BASE = "//localhost:5000/api";
 
 class FeedAPIImpl {
     async search(query: string): Promise<FeedResult> {

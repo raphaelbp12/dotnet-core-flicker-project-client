@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { FeedAPI } from "./services/FeedService";
 import FeedItem from "./types/FeedItem";
 import FeedResult from "./types/FeedResult";
 import ChipInput from 'material-ui-chip-input'
-import { ImgMediaCard } from "./components/ImgMediaCard";
 import { Grid } from "@material-ui/core";
+import { SkeletonGrid } from "./components/SkeletonGrid";
+import { FeedList } from "./components/FeedList";
 
 function App() {
     const queryDefaultValue: string[] = ['nyhavn', 'tivoli'];
+
     const [query, setQuery] = useState<string>(queryDefaultValue.join(','));
     const [items, setItems] = useState<FeedItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -20,7 +22,10 @@ function App() {
             if (result && result.items) {
                 setItems(result.items);
             }
-        });
+        })
+            .catch(error => {
+                setLoading(false);
+            });
     }, [query]);
 
     const handleChange = useCallback((chips: string[]) => {
@@ -44,16 +49,7 @@ function App() {
                     justify="flex-start"
                     alignItems="flex-start"
                 >
-                    {items.map((item: FeedItem, index: number) => {
-                        const prop = {
-                            ...item,
-                            loading: loading,
-                        }
-                        return <Grid item xs={12} sm={6} md={3} key={index}>
-                        <ImgMediaCard {...prop} />
-                    </Grid>
-                    }
-                    )}
+                  { loading? (< SkeletonGrid />) : <FeedList list={items} /> }
                 </Grid>
             </div>
         </div>

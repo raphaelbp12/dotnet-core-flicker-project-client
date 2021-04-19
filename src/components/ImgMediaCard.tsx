@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,7 +8,6 @@ import FeedItem from '../types/FeedItem';
 import { Avatar, CardHeader } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import moment from 'moment'
-import Skeleton from '@material-ui/lab/Skeleton';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ImgMediaCardProps extends FeedItem {
-    loading: boolean;
 }
 
 export const ImgMediaCard: FC<ImgMediaCardProps> = props => {
@@ -54,28 +52,28 @@ export const ImgMediaCard: FC<ImgMediaCardProps> = props => {
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    props.loading ? (<Skeleton variant="circle" width={40} height={40} />) : (<Avatar aria-label="recipe" className={classes.avatar}>
-                        {authorName[0].toUpperCase()}
-                    </Avatar>)
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                        {authorName ? authorName[0].toUpperCase() : ''}
+                    </Avatar>
 
                 }
                 titleTypographyProps={{ variant: 'caption', align: 'left' }}
                 subheaderTypographyProps={{ variant: 'caption', align: 'left' }}
-                title={props.loading ? (<Skeleton variant="text" />) : authorName}
-                subheader={props.loading ? (<Skeleton variant="text" />) : moment(props.published).format("LL")}
+                title={authorName}
+                subheader={moment(props.published).format("LL")}
             />
-            {props.loading ? (<Skeleton variant="rect" height={140} />) : (<CardMedia
+            {<CardMedia
                 component="img"
                 alt={props.title}
                 height="140"
                 image={props.media.m}
                 title={props.title}
-            />)}
+            />}
             <CardContent className={classes.content}>
-            {props.loading ? (<Skeleton variant="text" />) : (<Typography gutterBottom variant="caption" component="h2">
+                {<Typography gutterBottom variant="caption" component="h2">
                     {props.title}
-                </Typography>)}
-                
+                </Typography>}
+
             </CardContent>
         </Card>
     );
