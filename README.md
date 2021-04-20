@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# dotnet-core-flicker-project-client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project consists in a small App written in ReactJS that consumes a [Proxy API](https://github.com/raphaelbp12/dotnet-core-flicker-project-server) of [Flickr Feed](https://www.flickr.com/services/feeds/photos_public.gne?format=json&tags=nature,space).
 
-## Available Scripts
+Due the time limitation, this app has the components being constructed in `App.tsx` file. If the project grows, it would have a router there, organizing it better.
 
-In the project directory, you can run:
+# API Port
+The **API BASE URL** is hardcoded inside `FeedService.ts`.
 
-### `npm start`
+# TypeScript
+The TypeScript is important to a JS project in order to give more robustness to the codebase when the project grows.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Running the App (dev mode)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+First, run `npm i` and then `npm start` to run the app in the dev mode.
+It will open [http://localhost:3000](http://localhost:3000).
 
-### `npm test`
+# Running the Docker
+Run these commands at the root project folder:
+### building the image
+`docker build --pull --rm -f "dockerfile" -t dotnetcoreflickerprojectclient:latest "."`
+### running the image
+`docker run --rm -it  -p 80:80/tcp dotnetcoreflickerprojectclient:latest`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Future Work
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* **Config Files** - this app has the API URL hardcoded inside the service. It is mandatory to have this kind of variable set in Environment Variables.
+* **e2e Tests**
+* **Unit tests**
+* **Picture Modal** - when the user clicks on an image, it should open a modal showing the entire image and the post info.
+* **Improve User Feedback** - it is important to show errors feedback and an empty page alert to the user.
